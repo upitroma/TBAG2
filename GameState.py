@@ -21,7 +21,7 @@ class GameState:
             self.playerLevel = 1 # max 16 2^4
             self.playerHealth = 100 # max 1024 2^10
             self.currentLocationID = 0 # max 128 2^7
-            self.healthPotionCount = 0 # max 8 2^3
+            self.healthPotionCount = 3 # max 8 2^3
         else:
             try:
                 #decode save code
@@ -31,7 +31,7 @@ class GameState:
                 
                 # convert save code to binary
                 saveBin = bin(int(saveCode, 16))[2:].zfill(len(saveCode) * 4)
-                print(saveBin)
+                # print(saveBin)
 
                 serverHash=sha256(saveBin.encode('ascii')+SERVER_SECRET.encode('ascii')).hexdigest()[:10]
 
@@ -82,7 +82,7 @@ class GameState:
 
         bStr = name+lvl+hp+locID+potionCount
 
-        print(bStr)
+        # print(bStr)
 
         hash=sha256(bStr.encode('ascii')+SERVER_SECRET.encode('ascii')).hexdigest()
         
@@ -95,5 +95,16 @@ class GameState:
 
         print(saveCode) 
 
-        
+    def levelUp(self):
+        self.playerLevel += 1
+        print("You have leveled up to level "+str(self.playerLevel)+"!")
+        if self.playerLevel == 3:
+            print("You find an intricate shield on the ground.\n Its design and pattern matches that of your sword.\n You pick it up and equip it.")
+        if self.playerLevel == 6:
+            print("You find a large metal device with the same design patterns as your sword and shield.\n It clicks into place as you attach it to your shield.")
+            print("After closer inspection, it looks like the device can be connected to the tip of your sword, allowing you to swing your shield like a heavy axe.")
+        if self.playerLevel == 10:
+            print("You find a pair of strange batteries. Slotting them into your sword causes it to glow faintly.")
+            print("Testing your sword on the fresh carcase, you feel a power building within the batteries.")
+            print("As you stand over the corpse with your sword glowing a bright red, you wonder how much damage your axe will do when fully charged.")
        

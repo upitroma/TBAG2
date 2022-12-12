@@ -6,7 +6,8 @@ def BaseCamp(gameState):
     choice = getChoice(["check item box","Go to Water Front (1)","Save Game"])
     match choice:
         case "check item box":
-            print("You have the following items:")
+            print("the item box is empty.")
+            print("You have "+str(gameState.healthPotionCount)+" health potions.")
             BaseCamp(gameState)
         case "Go to Water Front (1)":
             gameState.currentLocationID = 1
