@@ -6,6 +6,10 @@ from locations.Dunes import Dunes
 from locations.Waterfall import Waterfall
 from locations.Cliff import Cliff
 from locations.Forest import Forest
+from locations.Pond import Pond
+from locations.SpiderField import SpiderField
+from locations.AbyssEntrance import AbyssEntrance
+
 
 areas = ["Base Camp", "Water Front (1)" "Forest (2)", "Pond (3)", "Spider Field (4)", "Dunes (5)", "Large Field (6)", "Waterfall (7)", "Cliff (8)", "Abyss Entrance (9)", "Lower Abyss (10)", "Mushroom Area (11)"]
 
@@ -20,6 +24,10 @@ def loadLevel(gamestate):
                 WaterFront(gamestate)
             case 2:
                 Forest(gamestate)
+            case 3:
+                Pond(gamestate)
+            case 4:
+                SpiderField(gamestate)
             case 5:
                 Dunes(gamestate)
             case 6:
@@ -28,6 +36,8 @@ def loadLevel(gamestate):
                 Waterfall(gamestate)
             case 8:
                 Cliff(gamestate)
+            case 9:
+                AbyssEntrance(gamestate)
             case _:
                 print("You are in an unknown area.")
                 quit()
