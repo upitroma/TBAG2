@@ -1,15 +1,8 @@
-from simple_term_menu import TerminalMenu
-
 from GameState import GameState
+from GetChoice import getChoice
+from locations.StartingArea import StartingArea
 
-
-def getChoice(choiceArray):
-    terminal_menu = TerminalMenu(choiceArray)
-    menu_entry_index = terminal_menu.show()
-    print("You selected: " + choiceArray[menu_entry_index])
-    return choiceArray[menu_entry_index]
-
-
+areas = ["StartingArea", "Forest", "Cave", "Town", "Castle"]
 
 def createCharacter():
     print("What is your name? (no more than 10 characters)")
@@ -19,16 +12,41 @@ def createCharacter():
         createCharacter()
     else:
         return playerName
-    
 
-def main():
+def loadLevel(gameState):
+    match areas[gameState.currentLocationID]:
+        case "StartingArea":
+            StartingArea(gameState)
+        case _:
+            print("You are in an unknown area.")
+        # case "Forest":
+        #     Forest(gameState)
+        # case "Cave":
+        #     Cave(gameState)
+        # case "Town":
+        #     Town(gameState)
+        # case "Castle":
+        #     Castle(gameState)
+
+
+def titleScreen():
     print("Welcome!\n")
     match getChoice(["New Game", "Continue Game"]):
         case "New Game":
             gameState = GameState()
             gameState.printSaveCode()
+            print("You can return to your game at any time by entering this code on the title screen.")
+            print("I'll send you back to the title screen now. Give it a try!")
+            print()
+            titleScreen()
         case "Continue Game":
             print("Enter your save code:")
             saveCode = input()
             gameState = GameState(saveCode)
-main()
+            if gameState.validGameState:
+                loadLevel(gameState)
+            else:
+                print("Invalid save code")
+                print()
+                titleScreen()
+titleScreen()
