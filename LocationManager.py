@@ -9,6 +9,8 @@ from locations.Forest import Forest
 from locations.Pond import Pond
 from locations.SpiderField import SpiderField
 from locations.AbyssEntrance import AbyssEntrance
+from locations.LowerAbyss import LowerAbyss
+from locations.MushroomArea import MushroomArea
 
 
 areas = ["Base Camp", "Water Front (1)" "Forest (2)", "Pond (3)", "Spider Field (4)", "Dunes (5)", "Large Field (6)", "Waterfall (7)", "Cliff (8)", "Abyss Entrance (9)", "Lower Abyss (10)", "Mushroom Area (11)"]
@@ -38,6 +40,10 @@ def loadLevel(gamestate):
                 Cliff(gamestate)
             case 9:
                 AbyssEntrance(gamestate)
+            case 10:
+                LowerAbyss(gamestate)
+            case 11:
+                MushroomArea(gamestate)
             case _:
                 print("You are in an unknown area.")
                 quit()
