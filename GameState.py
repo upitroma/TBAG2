@@ -18,9 +18,10 @@ class GameState:
         if saveCode == None:
             self.validGameState = True
             self.playerName = createCharacter() # 10 char 2^80
-            self.playerLevel = 1 # max 128 2^7
+            self.playerLevel = 1 # max 16 2^4
             self.playerHealth = 100 # max 1024 2^10
             self.currentLocationID = 0 # max 128 2^7
+            self.healthPotionCount = 0 # max 8 2^3
         else:
             try:
                 #decode save code
@@ -30,7 +31,7 @@ class GameState:
                 
                 # convert save code to binary
                 saveBin = bin(int(saveCode, 16))[2:].zfill(len(saveCode) * 4)
-                # print(saveBin)
+                print(saveBin)
 
                 serverHash=sha256(saveBin.encode('ascii')+SERVER_SECRET.encode('ascii')).hexdigest()[:10]
 
@@ -47,17 +48,21 @@ class GameState:
                 self.playerName = str(binascii.unhexlify('%x' % n))[2:-1]
                 print("name:"+self.playerName)
 
-                #get level from the next 7 bits
-                self.playerLevel = int(saveBin[80:87], 2)
+                #get level from the next 4 bits
+                self.playerLevel = int(saveBin[80:84], 2)
                 print("level:"+str(self.playerLevel))
 
                 #get health from the next 10 bits
-                self.playerHealth = int(saveBin[87:97], 2)
+                self.playerHealth = int(saveBin[84:94], 2)
                 print("health:"+str(self.playerHealth))
 
                 #get location from the next 7 bits
-                self.currentLocationID = int(saveBin[97:104], 2)
+                self.currentLocationID = int(saveBin[94:101], 2)
                 print("location:"+str(self.currentLocationID))
+
+                #get health potion count from the next 3 bits
+                self.healthPotionCount = int(saveBin[101:104], 2)
+                print("health potion count:"+str(self.healthPotionCount))
 
                 self.validGameState = True
                 return
@@ -70,13 +75,14 @@ class GameState:
     def printSaveCode(self):
         print("your save code is:")
         name = '{0:080b}'.format(int(binascii.hexlify(self.playerName.encode('utf-8')), 16))
-        lvl = '{0:07b}'.format(self.playerLevel)
+        lvl = '{0:04b}'.format(self.playerLevel)
         hp = '{0:010b}'.format(self.playerHealth)
         locID = '{0:07b}'.format(self.currentLocationID)
+        potionCount = '{0:03b}'.format(self.healthPotionCount)
 
-        bStr = name+lvl+hp+locID
+        bStr = name+lvl+hp+locID+potionCount
 
-        # print(bStr)
+        print(bStr)
 
         hash=sha256(bStr.encode('ascii')+SERVER_SECRET.encode('ascii')).hexdigest()
         
