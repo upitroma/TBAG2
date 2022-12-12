@@ -22,7 +22,11 @@ class SmallPig:
         match self.intent:
             case "headbutt":
                 self.intent="unknown"
-                if playerAction != "Dodge" and playerAction != "Block":
+                if playerAction=="Block":
+                    print("The pig headbutts your shield, hurting itself for 3 damage")
+                    self.health -= 3
+                    return 0
+                elif playerAction != "Dodge":
                     print("The pig headbutts you for 5 damage")
                     return 5
                 return 0
@@ -34,7 +38,7 @@ class SmallPig:
                 self.intent="unknown"
                 if playerAction=="Block":
                     print("The pig impacts your shield for 5 damage")
-                    return 3
+                    return 5
                 elif playerAction=="Dodge":
                     return 0
                 else:

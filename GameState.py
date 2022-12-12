@@ -99,12 +99,14 @@ class GameState:
         self.playerLevel += 1
         print("You have leveled up to level "+str(self.playerLevel)+"!")
         if self.playerLevel == 3:
-            print("You find an intricate shield on the ground.\n Its design and pattern matches that of your sword.\n You pick it up and equip it.")
+            print("You find an intricate shield on the ground.")
+            print("Its design and pattern matches that of your sword.")
+            print("You pick it up and equip it.")
         if self.playerLevel == 6:
             print("You find a large metal device with the same design patterns as your sword and shield.\n It clicks into place as you attach it to your shield.")
             print("After closer inspection, it looks like the device can be connected to the tip of your sword, allowing you to swing your shield like a heavy axe.")
         if self.playerLevel == 10:
             print("You find a pair of strange batteries. Slotting them into your sword causes it to glow faintly.")
             print("Testing your sword on the fresh carcase, you feel a power building within the batteries.")
-            print("As you stand over the corpse with your sword glowing a bright red, you wonder how much damage your axe will do when fully charged.")
+            print("As you stand over the corpse with your sword glowing a bright red, you wonder how much damage your axe will do when fully charged.\n")
        
