@@ -19,7 +19,7 @@ class GameState:
             self.playerName = createCharacter() # 10 char 2^80
             self.playerLevel = 1 # max 128 2^7
             self.playerHealth = 100 # max 1024 2^10
-            self.currentLocationID = 0 # max 128 2^7
+            self.currentLocationID = 1 # max 128 2^7
         else:
             #decode save code
             #check hash
@@ -27,7 +27,8 @@ class GameState:
             saveCode=saveCode[10:]
             
             # convert save code to binary
-            saveBin = bin(int(saveCode, 16))[2:].zfill(len(saveCode) * 4)[3:]
+            saveBin = bin(int(saveCode, 16))[2:].zfill(len(saveCode) * 4)
+            # print(saveBin)
 
             serverHash=sha256(saveBin.encode('ascii')+SERVER_SECRET.encode('ascii')).hexdigest()[:10]
 
@@ -51,6 +52,10 @@ class GameState:
             self.playerHealth = int(saveBin[87:97], 2)
             print("health:"+str(self.playerHealth))
 
+            #get location from the next 7 bits
+            self.currentLocationID = int(saveBin[97:104], 2)
+            print("location:"+str(self.currentLocationID))
+
 
     # print a hex encoded string that can be used to recreate the game state and all of its variables
     def printSaveCode(self):
@@ -58,8 +63,13 @@ class GameState:
         name = '{0:080b}'.format(int(binascii.hexlify(self.playerName.encode('utf-8')), 16))
         lvl = '{0:07b}'.format(self.playerLevel)
         hp = '{0:010b}'.format(self.playerHealth)
+        locID = '{0:07b}'.format(self.currentLocationID)
 
-        bStr = name+lvl+hp
+        print("locID: "+locID)
+
+        bStr = name+lvl+hp+locID
+
+        # print(bStr)
 
         hash=sha256(bStr.encode('ascii')+SERVER_SECRET.encode('ascii')).hexdigest()
         
