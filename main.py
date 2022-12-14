@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from GameState import GameState
 from GetChoice import getChoice
 from LocationManager import loadLevel

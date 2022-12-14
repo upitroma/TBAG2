@@ -2,9 +2,8 @@ import random
 class SmallPig:
     
     def __init__(self):
-        self.rng = random.Random()
         self.health = 50
-        self.locationID = 2
+        self.locationID = 6
         self.attackOptions=["do nothing","headbutt","windup"]
         self.intent="unknown"
 
